@@ -1,5 +1,7 @@
 package br.ce.wcaquino.tasks.functional;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
@@ -7,18 +9,22 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class TaskTest {
 	
-	public  WebDriver acessarAplicacao() {
-		WebDriver driver = new ChromeDriver();
-		driver.navigate().to("http://localhost:8001/tasks/");
+	public  WebDriver acessarAplicacao() throws MalformedURLException {
+		//WebDriver driver = new ChromeDriver();
+		DesiredCapabilities cap = DesiredCapabilities.chrome();
+		WebDriver driver = new RemoteWebDriver(new URL("http://192.168.0.108:4444/wd/hub"),cap);
+		driver.navigate().to("http://192.168.0.108:8001/tasks/");
 		driver.findElement(By.id("addTodo")).click();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		return driver;
 	}
 	@Test
-	public void deveSalvarTarefaComSucesso() {
+	public void deveSalvarTarefaComSucesso() throws MalformedURLException {
 		WebDriver driver = acessarAplicacao();
 		try {
 		driver.findElement(By.id("task")).sendKeys("Teste automatizado");
@@ -32,8 +38,8 @@ public class TaskTest {
 		
 	}
 	@Test
-	public void naoDeveSalvarTarefaComDataPassada() {
-		WebDriver driver = new ChromeDriver();
+	public void naoDeveSalvarTarefaComDataPassada() throws MalformedURLException {
+		WebDriver driver = acessarAplicacao();
 		try {
 		driver.navigate().to("http://localhost:8001/tasks/");
 		driver.findElement(By.id("addTodo")).click();
@@ -49,8 +55,8 @@ public class TaskTest {
 		
 	}
 	@Test
-	public void naoDeveSalvarTarefaSemDescricao() {
-		WebDriver driver = new ChromeDriver();
+	public void naoDeveSalvarTarefaSemDescricao() throws MalformedURLException {
+		WebDriver driver = acessarAplicacao();
 		try {
 		driver.navigate().to("http://localhost:8001/tasks/");
 		driver.findElement(By.id("addTodo")).click();
@@ -64,8 +70,8 @@ public class TaskTest {
 	}	
 	}
 	@Test
-	public void naoDeveSalvarTarefaSemData() {
-		WebDriver driver = new ChromeDriver();
+	public void naoDeveSalvarTarefaSemData() throws MalformedURLException {
+		WebDriver driver = acessarAplicacao();
 		try {
 		driver.navigate().to("http://localhost:8001/tasks/");
 		driver.findElement(By.id("addTodo")).click();
