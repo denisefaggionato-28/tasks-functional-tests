@@ -8,7 +8,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -41,9 +40,6 @@ public class TaskTest {
 	public void naoDeveSalvarTarefaComDataPassada() throws MalformedURLException {
 		WebDriver driver = acessarAplicacao();
 		try {
-		driver.navigate().to("http://localhost:8001/tasks/");
-		driver.findElement(By.id("addTodo")).click();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.findElement(By.id("task")).sendKeys("Teste automatizado");
 		driver.findElement(By.id("dueDate")).sendKeys("10/04/2010");
 		driver.findElement(By.id("saveButton")).click();
@@ -58,9 +54,6 @@ public class TaskTest {
 	public void naoDeveSalvarTarefaSemDescricao() throws MalformedURLException {
 		WebDriver driver = acessarAplicacao();
 		try {
-		driver.navigate().to("http://localhost:8001/tasks/");
-		driver.findElement(By.id("addTodo")).click();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.findElement(By.id("dueDate")).sendKeys("10/04/2020");
 		driver.findElement(By.id("saveButton")).click();
 		String text = driver.findElement(By.id("message")).getText();
@@ -73,9 +66,6 @@ public class TaskTest {
 	public void naoDeveSalvarTarefaSemData() throws MalformedURLException {
 		WebDriver driver = acessarAplicacao();
 		try {
-		driver.navigate().to("http://localhost:8001/tasks/");
-		driver.findElement(By.id("addTodo")).click();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.findElement(By.id("task")).sendKeys("Teste automatizado");
 		driver.findElement(By.id("saveButton")).click();
 		String text = driver.findElement(By.id("message")).getText();
